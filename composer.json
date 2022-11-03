@@ -1,0 +1,22 @@
+{
+    "name": "avenirer/php-calendar",
+    "description": "A PHP class to generate calendars.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Avenirer\\PhpCalendar\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Adrian Voicu - Avenirer",
+            "email": "avenir.ro@gmail.com",
+            "homepage": "https://github.com/avenirer",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7"
+    }
+}
