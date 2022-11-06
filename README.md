@@ -24,6 +24,55 @@ If you want to have further settings, you can use the chaining of methods before
 ### Set the language
 We can set the language of the  using the `setLocale()` method. If we want to use English, we can forget about this method. Otherwise, you can choose from 'fr' (French) and 'ro' (Romanian).
 
+### Add events to calendar
+You can add events to the calendar if you consider it useful. In order to add events, you should create an Events object:
+
+```php
+$events = new Events;
+
+$events->add(
+  [
+    'startDate' => '2022-11-22',
+    'startTime' => '13:10',
+    'title' => 'Event title',
+  ],
+);
+```
+
+By using the add() method to which you pass an array with the event details, you can add the event details. The required fields for the event are the `startDate` and the `title`. The array can also receive other parameters, if you think you need them:
+
+```php
+[
+  'startDate' => '2022-11-22', // start date of the event
+  'startTime' => '13:10', // start time of the event
+  'endDate' => '2022-12-01', // end date of the event
+  'endTime' => '14:00', // end time of the event
+  'title' => 'Event title', // the event title
+  'shortContent' => 'The teaser of the content', // a short description of the event
+  'content' => 'Full description of the event', // a longer description of the event
+  'link' => 'https://link.to/wherever' // link to the event page
+]
+```
+
+By the way, you can add multiple events on the same method:
+
+```php
+$events->add(
+  [
+    [
+      'startDate' => '2022-11-22',
+      'startTime' => '13:10',
+      'title' => 'Event title',
+    ],
+    [
+      'startDate' => '2022-12-22',
+      'startTime' => '13:40',
+      'title' => 'One Event title',
+    ],
+  ]
+);
+```
+
 ### Does the week start on Monday?
 If you want to set the week to start on Monday, as in "not the American style", you can use the method `weekStartsMonday()`.
 
