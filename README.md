@@ -10,7 +10,15 @@ $calendar = new Calendar;
 Then simply chain the settings:
 
 ```php
-$returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->padWithZeros()->showMonthName()->addDayCustomLink('/test/{year}/{month}/{day}')->getMonth('2022-11-01')->asMatrix();
+$returned = $calendar
+  ->setLocale('ro')
+  ->addEvents($events)
+  ->weekStartsMonday()
+  ->padWithZeros()
+  ->showMonthName()
+  ->addDayCustomLink('/test/{year}/{month}/{day}')
+  ->getMonth('2022-11-01')
+  ->asMatrix();
 ```
 The bare minimum to setup the calendar is:
 
