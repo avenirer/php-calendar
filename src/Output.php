@@ -9,6 +9,8 @@ class Output
   private $weekDayFirstDayOfMonth;
   private $totalDaysInMonth;
   private $dayCustomLink = null;
+  private $showMonthName = false;
+  private $padWithZeros = false;
   public function __construct(Calendar $calendar) {
     $this->locale = $calendar->locale;
     $this->firstDayOfWeek = $calendar->firstDayOfWeek;
@@ -16,6 +18,8 @@ class Output
     $this->totalDaysInMonth = $calendar->totalDaysInMonth;
     $this->monthData = $calendar->monthData;
     $this->dayCustomLink = $calendar->dayCustomLink;
+    $this->showMonthName = $calendar->showMonthName;
+    $this->padWithZeros = $calendar->padWithZeros;
   }
 
   public function asMatrix() {
@@ -29,9 +33,11 @@ class Output
     $output = '<table class="phpcalendar matrix month month-'.$this->monthData['index'].'">';
     $output .= '<thead>';
 
-    $output .= '<tr>';
-    $output .= '<th colspan="7" scope="colgroup" class="month-name">'.$this->monthData['long'].'</th>';
-    $output .= '</tr>';
+    if($this->showMonthName) {
+        $output .= '<tr>';
+        $output .= '<th colspan="7" scope="colgroup" class="month-name">'.$this->monthData['long'].'</th>';
+        $output .= '</tr>';
+    }
 
     // week days
     $output .= '<tr class="weekdays">';
@@ -63,7 +69,8 @@ class Output
                 $link = str_replace(['{year}', '{month}', '{day}'],[$this->monthData['year'], sprintf('%02d',$this->monthData['index']), sprintf('%02d', $day)], $this->dayCustomLink);
                 $output .= '<a href="' . $link . '">';
             }
-            $output .= '<span class="' . ($this->monthData['days'][$day]['events'] ? 'event' : '') . '">'.$day.'</span>';
+            $paddedDay = $this->padWithZeros ? sprintf("%02d", $day) : $day;
+            $output .= '<span class="' . ($this->monthData['days'][$paddedDay]['events'] ? 'event' : '') . '">'.$paddedDay.'</span>';
             if($this->dayCustomLink) {
                 $output .= '</a>';
             }
@@ -94,15 +101,21 @@ class Output
 }
 
 public function asList() {
-    $output = '<ul class="phpcalendar list month month-'.$this->monthData['index'].'">';
+    $output = '<div class="phpcalendar list month month-'.$this->monthData['index'].'">';
 
+    if($this->showMonthName) {
+        $output .= '<div class="month-name">'.$this->monthData['long'].'</div>';
+    }
+
+    $output .= '<ul>';
     foreach($this->monthData['days'] as $day) {
         $output .= '<li class="day weekday-'.$day['index'].'" data-day="'.$day['monthDay'].'" data-month="'.$this->monthData['index'].'" data-year="'.$this->monthData['year'].'">';
         $output .= '<span class="date">' . $day['short'] . '<br />' . $day['monthDay'] . '</span>';
         $output .= '</li>';
     }
-
     $output .= '</ul>';
+
+    $output .= '</div>';
     return $output;
 }
 

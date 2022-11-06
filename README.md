@@ -10,7 +10,7 @@ $calendar = new Calendar;
 Then simply chain the settings:
 
 ```php
-$returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->addDayCustomLink('/test/{year}/{month}/{day}')->getMonth('2022-11-01')->asMatrix();
+$returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->padWithZeros()->showMonthName()->addDayCustomLink('/test/{year}/{month}/{day}')->getMonth('2022-11-01')->asMatrix();
 ```
 The bare minimum to setup the calendar is:
 
@@ -90,7 +90,11 @@ If you want to see the month as a matrix (HTML table), you can pass this as a se
 #### List
 If you want to see the month as a list (HTML UL list), you can pass this as a second parameter of `getMonth()` method `...->getMonth('2022-11-01', 'list')`. Also, you can use another method after the `getMonth()`, `asList()`.
 
+#### Show the month name?
+For the methods that output in HTML the month we can request that the month name be shown using the `showMonthName()` method.
+
+#### Show leading zeros?
+For the one number month days (1 to 9) you can decide to prepend the day number with a leading zero. You can do this by adding the method `padWithZeros()`.
+
 #### Array
 If you just want an array with the month, you can pass this as a second parameter of `getMonth()` method `...->getMonth('2022-11-01', 'array')`. Also, you can use another method after the `getMonth()`, `asArray()`.
-
-//$returned = $calendar->setLocale('ro')->weekStartsMonday()->getMonth('3025-09-01')->asList();

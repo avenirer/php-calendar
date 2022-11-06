@@ -10,6 +10,8 @@ class Calendar {
     public $locale, $weekDayFirstDayOfMonth, $totalDaysInMonth, $monthData, $events;
     public $dayCustomLink = null;
     public $firstDayOfWeek = 0;
+    public $showMonthName = false;
+    public $padWithZeros = false;
 
     function __construct() {
         $this->locale = Languages::getLocale('en');
@@ -39,8 +41,9 @@ class Calendar {
         $weekDay = $this->weekDayFirstDayOfMonth;
 
         for($i = 1; $i <= $this->totalDaysInMonth; $i++) {
+            $key = $this->padWithZeros ? sprintf("%02d", $i) : $i;
             $events = $this->events[$this->monthData['year'] . '-' . $this->monthData['index'] . '-' . sprintf("%02d", $i)] ?? [];
-            $days[$i] = array_merge(['monthDay' => $i, 'events' => $events], $this->locale['weekdays'][$weekDay]);
+            $days[$key] = array_merge(['monthDay' => $key, 'events' => $events], $this->locale['weekdays'][$weekDay]);
             $weekDay = ($weekDay == 6) ? 0 : $weekDay+=1;
         }
 
@@ -77,6 +80,21 @@ class Calendar {
 
     public function weekStartsSunday() {
         $this->firstDayOfWeek = 0;
+        return $this;
+    }
+
+    public function showMonthName() {
+        $this->showMonthName = true;
+        return $this;
+    }
+
+    public function hideMonthName() {
+        $this->showMonthName = false;
+        return $this;
+    }
+
+    public function padWithZeros() {
+        $this->padWithZeros = true;
         return $this;
     }
 

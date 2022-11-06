@@ -23,7 +23,9 @@ $events->add(
 
 $calendar = new Calendar;
 
-$returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->addDayCustomLink('/test/{year}/{month}/{day}')->getMonth('2022-11-01')->asMatrix();
+$returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->showMonthName()->padWithZeros()->addDayCustomLink('/test/{year}/{month}/{day}')->getMonth('2022-11-01');
+$returnedAsMatrix = $returned->asMatrix();
+$returnedAsList = $returned->asList();
 //$returned = $calendar->setLocale('ro')->weekStartsMonday()->getMonth('3025-09-01')->asList();
 
 ?>
@@ -39,7 +41,7 @@ $returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->
   padding: 0;
 }
 
-.phpcalendar.matrix.month {
+.phpcalendar.matrix.month, .phpcalendar.list.month {
   background: #2b4450;
   border-radius: 4px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
@@ -47,12 +49,13 @@ $returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->
   transition: .9s;
   transform-style: preserve-3d;
   width: 100%;
+  color: #dfebed;
 }
 
 /* Front - Calendar */
-.front {
+/* .front {
   transform: rotateY(0deg);
-}
+} 
 
 .current-date {
   border-bottom: 1px solid rgba(73, 114, 133, .6);
@@ -62,18 +65,17 @@ $returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->
 }
 
 .current-date h1 {
-  color: #dfebed;
   font-size: 1.4em;
   font-weight: 300;
-}
+}*/
 
-.phpcalendar.matrix th {
+.phpcalendar.matrix th, .phpcalendar.list .month-name, .phpcalendar.list li {
   color: #dfebed;
   font-weight: 600;
   padding: 10px 20px;
 }
 
-.phpcalendar.matrix th.month-name {
+.phpcalendar.matrix th.month-name, .phpcalendar.list .month-name {
   font-size: 1.5em;
   font-variant: small-caps;
   font-weight: 400;
@@ -117,8 +119,11 @@ $returned = $calendar->setLocale('ro')->addEvents($events)->weekStartsMonday()->
     </style>
   </head>
   <body>
-    <div style="width:200px;">
-      <?php echo $returned; ?>
+    <div style="width:200px; margin-bottom: 20px;">
+      <?php echo $returnedAsMatrix; ?>
+    </div>
+    <div>
+      <?php echo $returnedAsList; ?>
     </div>
   </body>
 </html>
